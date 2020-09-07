@@ -1,11 +1,76 @@
 import 'phaser';
 
-import { SimpleScene } from './scenes/simple-scene';
+// import { SimpleScene } from './scenes/simple-scene';
 
 const gameConfig = {
-  width: 680,
-  height: 400,
-  scene: SimpleScene
+  type: Phaser.AUTO,
+  width: 800,
+  height: 600,
+  scene: {
+      preload: preload,
+      create: create,
+      update: update,
+  },
+  physics: {
+      default: 'arcade',
+      arcade: {
+        debug: true,
+        gravity: {
+          y:0,
+        },
+      },
+    },
 };
 
 new Phaser.Game(gameConfig);
+
+function preload() {
+ this.load.image('button1', '../assets/images/ui/blue_button01.png');
+
+ this.load.spritesheet('items', '../assets/images/items.png', {frameWidth:32, frameHeight:32});
+
+ this.load.spritesheet('characters', '../assets/images/characters.png', {frameWidth:32, frameHeight:32});
+
+ this.load.audio('goldSound', ['assets/audio/Pickup.wav']);
+
+}
+ 
+function create() {
+  let goldPickupAudio = this.sound.add('goldSound', {loop: false});
+  goldPickupAudio.play();
+
+  let button = this.add.image(10, 100, 'button1');
+  button.setOrigin(0.5,0.5);
+
+  this.chest = this.physics.add.image(300, 300, 'items', 0);
+
+  this.wall = this.physics.add.image(500, 100, 'button1');
+  this.wall.setImmovable();
+
+  this.player = this.physics.add.image(32, 32, 'characters', 0);
+  this.player.setScale(2);
+  this.player.body.setCollideWorldBounds(true);
+
+  this.physics.add.collider(this.player, this.wall);
+  this.physics.add.overlap(this.player, this.chest, function(player, chest) { goldPickupAudio.play(); chest.destroy(); });
+
+  this.cursors = this.input.keyboard.createCursorKeys();
+}
+
+
+function update() {
+  this.player.setVelocity(0);
+  
+  if(this.cursors.left.isDown) {
+    this.player.setVelocityX(-160);
+  } else if (this.cursors.right.isDown) {
+    this.player.setVelocityX(160);
+  } 
+ 
+  if(this.cursors.up.isDown) {
+    this.player.setVelocityY(-160);
+  } else if (this.cursors.down.isDown) {
+    this.player.setVelocityY(160);
+  } 
+ 
+}
