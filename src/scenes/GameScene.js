@@ -1,9 +1,11 @@
 import Phaser from 'phaser';
 import Player from '../classes/Player';
 import Chest from '../classes/Chest';
-import goldSound from '../../assets/audio/Pickup.wav';
-import Ui from './UiScene';
+// import goldSound from '../../assets/audio/Pickup.wav';
+// import Ui from './UiScene';
 import Map from '../classes/Map';
+import GameManager from '../game_manager/GameManager'
+// import Monster from '../classes/Monster';
 export default class GameScene extends Phaser.Scene {
  
     constructor() {
@@ -22,14 +24,16 @@ export default class GameScene extends Phaser.Scene {
       this.createPlayer();
       this.addCollisions();
       this.createInput();
+
+      this.createGameManager(); 
     }
  
     update() {
-        this.player.update(this.cursors);
+      this.player.update(this.cursors);
     }
  
     createAudio() {
-        this.goldPickupAudio = this.sound.add('goldSound');
+      this.goldPickupAudio = this.sound.add('goldSound');
     }
  
     createPlayer(){
@@ -37,13 +41,13 @@ export default class GameScene extends Phaser.Scene {
     }
  
     createChests(){
-        this.chests = this.physics.add.group();
-        this.chestPositions = [[100,100], [200,200], [300,300], [400,400],[500,500]];
-        this.maxNumberOfChests = 3;
- 
-        for(let i = 0; i < this.maxNumberOfChests; i++) {
-          this.spawnChest();
-        }
+      this.chests = this.physics.add.group();
+      this.chestPositions = [[100,100], [200,200], [300,300], [400,400],[500,500]];
+      this.maxNumberOfChests = 3;
+
+      for(let i = 0; i < this.maxNumberOfChests; i++) {
+        this.spawnChest();
+      }
     }
  
     spawnChest() {
@@ -80,5 +84,10 @@ export default class GameScene extends Phaser.Scene {
 
     createMap() {
       this.map = new Map(this, 'map', 'background', 'background', 'blocked');
+    }
+
+    createGameManager() {
+      this.gameManager = new GameManager(this, this.map.map.objects);
+      this.gameManager.setup();
     }
 }
