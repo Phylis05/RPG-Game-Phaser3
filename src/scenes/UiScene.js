@@ -1,3 +1,4 @@
+import Game from './GameScene'
 export default class UiScene extends Phaser.Scene {
  
   constructor() {

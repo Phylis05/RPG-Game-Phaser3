@@ -2,7 +2,7 @@ import Phaser from 'phaser';
 import Player from '../classes/Player';
 import Chest from '../classes/Chest';
 import goldSound from '../../assets/audio/Pickup.wav';
-// import Ui from 'UiScene';
+import Ui from './UiScene';
 export default class GameScene extends Phaser.Scene {
  
     constructor() {
@@ -16,15 +16,10 @@ export default class GameScene extends Phaser.Scene {
  
     create() {
         this.createAudio();
-      
         this.createChests();
-      
         this.createWalls();
-      
         this.createPlayer();
-      
         this.addCollisions();
-      
         this.createInput();
     }
  
@@ -41,21 +36,29 @@ export default class GameScene extends Phaser.Scene {
     }
  
     createChests(){
-        this.chests = this.physics.add.group(); // NEW
-        this.chestPositions = [[100,100], [200,200], [300,300], [400,400],[500,500]]; // NEW
-        this.maxNumberOfChests = 3; // NEW
+        this.chests = this.physics.add.group();
+        this.chestPositions = [[100,100], [200,200], [300,300], [400,400],[500,500]];
+        this.maxNumberOfChests = 3;
  
-        for(let i = 0; i < this.maxNumberOfChests; i++) { // NEW
-          this.spawnChest(); // NEW
-        } // NEW
+        for(let i = 0; i < this.maxNumberOfChests; i++) {
+          this.spawnChest();
+        }
     }
  
     spawnChest() {
-       // NEW code starts here
-       const location = this.chestPositions[Math.floor(Math.random() * this.chestPositions.length)];
-       this.chest = new Chest(this, location[0], location[1], 'items', 0);
-       this.chests.add(this.chest);
-    // NEW code ends here
+      const location = this.chestPositions[Math.floor(Math.random() * this.chestPositions.length)];
+      
+      let chest = this.chests.getFirstDead();
+
+      if(!chest) {
+          const chest = new Chest(this, location[0], location[1], 'items', 0);
+      
+          this.chests.add(this.chest);
+      } else {
+          chest.setPosition(location[0], location[1]);
+          chest.makeActive();
+      }
+      
     }
  
     createWalls(){
@@ -73,12 +76,10 @@ export default class GameScene extends Phaser.Scene {
     }
  
     collectChest(player, chest) {
-        // NEW code starts here
-        this.goldPickupAudio.play(); 
-        this.score += chest.coins;
-        this.events.emit('updateScore', this.score);
-        chest.destroy(); 
-        this.time.delayedCall(1000, this.spawnChest, [], this);
-        // NEW code ends here
+      this.goldPickupAudio.play();
+      this.score += chest.coins;
+      this.events.emit('updateScore', this.score);
+      chest.makeInactive();
+      this.time.delayedCall(1000, this.spawnChest, [], this);
     }
 }
