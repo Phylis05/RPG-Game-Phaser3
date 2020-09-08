@@ -23,6 +23,8 @@ const gameConfig = {
         },
       },
     },
+    pixelArt: true,
+    roundPixels: true, 
 };
 
 let game = new Phaser.Game(gameConfig);

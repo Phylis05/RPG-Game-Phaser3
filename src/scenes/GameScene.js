@@ -3,6 +3,7 @@ import Player from '../classes/Player';
 import Chest from '../classes/Chest';
 import goldSound from '../../assets/audio/Pickup.wav';
 import Ui from './UiScene';
+import Map from '../classes/Map';
 export default class GameScene extends Phaser.Scene {
  
     constructor() {
@@ -18,7 +19,6 @@ export default class GameScene extends Phaser.Scene {
       this.createMap();
       this.createAudio();
       this.createChests();
-      this.createWalls();
       this.createPlayer();
       this.addCollisions();
       this.createInput();
@@ -33,7 +33,7 @@ export default class GameScene extends Phaser.Scene {
     }
  
     createPlayer(){
-        this.player = new Player(this, 32, 32, 'characters', 0);
+        this.player = new Player(this, 224, 224, 'characters', 0);
     }
  
     createChests(){
@@ -61,18 +61,13 @@ export default class GameScene extends Phaser.Scene {
       
     }
  
-    createWalls(){
-        this.wall = this.physics.add.image(500, 100, 'button1');
-        this.wall.setImmovable();
-    }
- 
     createInput() {
         this.cursors = this.input.keyboard.createCursorKeys();
     }
  
     addCollisions() {
-        this.physics.add.collider(this.player, this.wall);
-        this.physics.add.overlap(this.player, this.chests, this.collectChest, null, this);
+    this.physics.add.collider(this.player, this.map.blockedLayer);    // New code
+    this.physics.add.overlap(this.player, this.chests, this.collectChest, null, this);
     }
  
     collectChest(player, chest) {
@@ -84,8 +79,6 @@ export default class GameScene extends Phaser.Scene {
     }
 
     createMap() {
-        this.map = this.make.tilemap({ key: 'map' });
-        this.tiles = this.map.addTilesetImage('background', 'background', 32, 32, 1, 2);
-        this.backgroundLayer = this.map.createStaticLayer('background', this.tiles, 0, 0);
-      }
+      this.map = new Map(this, 'map', 'background', 'background', 'blocked');
+    }
 }
