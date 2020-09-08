@@ -15,12 +15,13 @@ export default class GameScene extends Phaser.Scene {
     }
  
     create() {
-        this.createAudio();
-        this.createChests();
-        this.createWalls();
-        this.createPlayer();
-        this.addCollisions();
-        this.createInput();
+      this.createMap();
+      this.createAudio();
+      this.createChests();
+      this.createWalls();
+      this.createPlayer();
+      this.addCollisions();
+      this.createInput();
     }
  
     update() {
@@ -52,8 +53,7 @@ export default class GameScene extends Phaser.Scene {
 
       if(!chest) {
           const chest = new Chest(this, location[0], location[1], 'items', 0);
-      
-          this.chests.add(this.chest);
+          this.chests.add(chest);
       } else {
           chest.setPosition(location[0], location[1]);
           chest.makeActive();
@@ -82,4 +82,10 @@ export default class GameScene extends Phaser.Scene {
       chest.makeInactive();
       this.time.delayedCall(1000, this.spawnChest, [], this);
     }
+
+    createMap() {
+        this.map = this.make.tilemap({ key: 'map' });
+        this.tiles = this.map.addTilesetImage('background', 'background', 32, 32, 1, 2);
+        this.backgroundLayer = this.map.createStaticLayer('background', this.tiles, 0, 0);
+      }
 }
