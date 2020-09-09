@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import Player from './Player';
 
 const Direction = {
@@ -8,7 +9,7 @@ const Direction = {
 };
 
 export default class PlayerContainer extends Phaser.GameObjects.Container {
-  constructor(scene, x, y, key, frame) {
+  constructor(scene, x, y, key, frame, health, maxHealth, id) {
     super(scene, x, y);
     this.scene = scene; // the scene this container will be added to
     this.velocity = 160; // the velocity when moving our player
@@ -16,6 +17,11 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     this.playerAttacking = false;
     this.flipX = true;
     this.swordHit = false;
+   
+    // update the new properties
+    this.health = health;
+    this.maxHealth = maxHealth;
+    this.id = id;
  
     // set a size on the container
     this.setSize(64, 64);
@@ -39,62 +45,65 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     this.scene.physics.world.enable(this.weapon);
     this.add(this.weapon);
     this.weapon.alpha = 0;
-}
  
-update(cursors) {
-  this.body.setVelocity(0);
-
-  if (cursors.left.isDown) {
-    this.body.setVelocityX(-this.velocity);
-    this.currentDirection = Direction.LEFT;
-    this.weapon.setPosition(-40, 0);
-    this.player.flipX = false;
-  } else if (cursors.right.isDown) {
-    this.body.setVelocityX(this.velocity);
-    this.currentDirection = Direction.RIGHT;
-    this.weapon.setPosition(40, 0);
-    this.player.flipX = true;
+    // create the player healthbar
+    // this.createHealthBar();
   }
+ 
+  update(cursors) {
+    this.body.setVelocity(0);
 
-  if (cursors.up.isDown) {
-    this.body.setVelocityY(-this.velocity);
-    this.currentDirection = Direction.UP;
-    this.weapon.setPosition(0, -40);
-  } else if (cursors.down.isDown) {
-    this.body.setVelocityY(this.velocity);
-    this.currentDirection = Direction.DOWN;
-    this.weapon.setPosition(0, 40);
-  }
+    if (cursors.left.isDown) {
+      this.body.setVelocityX(-this.velocity);
+      this.currentDirection = Direction.LEFT;
+      this.weapon.setPosition(-40, 0);
+      this.player.flipX = false;
+    } else if (cursors.right.isDown) {
+      this.body.setVelocityX(this.velocity);
+      this.currentDirection = Direction.RIGHT;
+      this.weapon.setPosition(40, 0);
+      this.player.flipX = true;
+    }
 
-  if (Phaser.Input.Keyboard.JustDown(cursors.space) && !this.playerAttacking) {
-    this.weapon.alpha = 1;
-    this.playerAttacking = true;
-    this.scene.time.delayedCall(150, () => {
-      this.weapon.alpha = 0;
-      this.playerAttacking = false;
-      this.swordHit = false;
-    }, [], this);
-  }
+    if (cursors.up.isDown) {
+      this.body.setVelocityY(-this.velocity);
+      this.currentDirection = Direction.UP;
+      this.weapon.setPosition(0, -40);
+    } else if (cursors.down.isDown) {
+      this.body.setVelocityY(this.velocity);
+      this.currentDirection = Direction.DOWN;
+      this.weapon.setPosition(0, 40);
+    }
 
-  if (this.playerAttacking) {
-    if (this.weapon.flipX) {
-      this.weapon.angle -= 10;
+    if (Phaser.Input.Keyboard.JustDown(cursors.space) && !this.playerAttacking) {
+      this.weapon.alpha = 1;
+      this.playerAttacking = true;
+      this.scene.time.delayedCall(150, () => {
+        this.weapon.alpha = 0;
+        this.playerAttacking = false;
+        this.swordHit = false;
+      }, [], this);
+    }
+
+    if (this.playerAttacking) {
+      if (this.weapon.flipX) {
+        this.weapon.angle -= 10;
+      } else {
+        this.weapon.angle += 10;
+      }
     } else {
-      this.weapon.angle += 10;
-    }
-  } else {
-    if (this.currentDirection === Direction.DOWN) {
-      this.weapon.setAngle(-270);
-    } else if (this.currentDirection === Direction.UP) {
-      this.weapon.setAngle(-90);
-    } else {
-      this.weapon.setAngle(0);
-    }
-    // flip the weapon when player is facing left 
-    this.weapon.flipX = false;
-    if (this.currentDirection === Direction.LEFT) {
-      this.weapon.flipX = true;
+      if (this.currentDirection === Direction.DOWN) {
+        this.weapon.setAngle(-270);
+      } else if (this.currentDirection === Direction.UP) {
+        this.weapon.setAngle(-90);
+      } else {
+        this.weapon.setAngle(0);
+      }
+      // flip the weapon when player is facing left 
+      this.weapon.flipX = false;
+      if (this.currentDirection === Direction.LEFT) {
+        this.weapon.flipX = true;
+      }
     }
   }
-}
 }

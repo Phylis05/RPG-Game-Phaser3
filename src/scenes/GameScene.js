@@ -1,7 +1,6 @@
 import Phaser from 'phaser';
 import Player from '../classes/player/Player';
 import PlayerContainer from '../classes/player/PlayerContainer';
-
 import Chest from '../classes/Chest';
 // import goldSound from '../../assets/audio/Pickup.wav';
 // import Ui from './UiScene';
@@ -37,8 +36,17 @@ export default class GameScene extends Phaser.Scene {
       this.goldPickupAudio = this.sound.add('goldSound');
     }
  
-    createPlayer(location) {
-      this.player = new PlayerContainer(this, location[0] * 2, location[1] * 2, 'characters', 0);
+    createPlayer(playerObject) {
+      this.player = new PlayerContainer(
+        this,
+        playerObject.x * 2,
+        playerObject.y * 2,
+        'characters',
+        0,
+        playerObject.health,
+        playerObject.maxHealth,
+        playerObject.id,
+      );
   }
  
     createGroups(){
