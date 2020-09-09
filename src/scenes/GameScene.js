@@ -2,6 +2,7 @@ import Phaser from 'phaser';
 // import Player from '../classes/player/Player';
 import PlayerContainer from '../classes/player/PlayerContainer';
 import Chest from '../classes/Chest';
+import PlayerModel from '../game_manager/PlayerModel';
 // import goldSound from '../../assets/audio/Pickup.wav';
 // import Ui from './UiScene';
 // import Spawner from '../game_manager/Spawner'
@@ -168,6 +169,10 @@ export default class GameScene extends Phaser.Scene {
    
       this.events.on('updatePlayerHealth', (playerId, health) => {
         this.player.updateHealth(health);
+      });
+
+      this.events.on('respawnPlayer', (playerObject) => {
+        this.player.respawn(playerObject);
       });
    
       this.gameManager = new GameManager(this, this.map.map.objects);

@@ -110,18 +110,23 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
   createHealthBar() {
     this.healthBar = this.scene.add.graphics();
     this.updateHealthBar();
-}
- 
-updateHealthBar() {
-  this.healthBar.clear();
-  this.healthBar.fillStyle(0xffffff, 1);
-  this.healthBar.fillRect(this.x - 32, this.y - 40, 64, 5);
-  this.healthBar.fillGradientStyle(0xff0000, 0xffffff, 4);
-  this.healthBar.fillRect(this.x - 32, this.y - 40, 64 * (this.health / this.maxHealth), 5);
-}
- 
-updateHealth(health) {
-    this.health = health;
+  }
+  
+  updateHealthBar() {
+    this.healthBar.clear();
+    this.healthBar.fillStyle(0xffffff, 1);
+    this.healthBar.fillRect(this.x - 32, this.y - 40, 64, 5);
+    this.healthBar.fillGradientStyle(0xff0000, 0xffffff, 4);
+    this.healthBar.fillRect(this.x - 32, this.y - 40, 64 * (this.health / this.maxHealth), 5);
+  }
+  
+  updateHealth(health) {
+      this.health = health;
+      this.updateHealthBar();
+  }
+  respawn(playerObject) {
+    this.health = playerObject.health;
+    this.setPosition(playerObject.x, playerObject.y);
     this.updateHealthBar();
-}
+  }
 }
