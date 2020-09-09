@@ -51,9 +51,29 @@ export default class GameManager {
   }
    
   setupEventListener() {
-    this.scene.events.on('pickUpChest', (chestId) => {
-      if (this.chests[chestId]) {
+    this.scene.events.on('pickUpChest', (chestId, playerId) => {
+      // update the spawner
+      if (this.chests[chestId]) {      
+        // update the spawner
         this.spawners[this.chests[chestId].spawnerId].removeObject(chestId);
+      }
+    });
+ 
+    this.scene.events.on('monsterAttacked', (monsterId, playerId) => {
+      // update the spawner
+      if (this.monsters[monsterId]) {
+        // subtract health monster model
+        this.monsters[monsterId].loseHealth();
+ 
+        // check the monsters health, and if dead remove that object
+        if (this.monsters[monsterId].health <= 0) {
+          // removing the monster
+          this.spawners[this.monsters[monsterId].spawnerId].removeObject(monsterId);
+          this.scene.events.emit('monsterRemoved', monsterId);
+        } else {
+          // update the monsters health
+          this.scene.events.emit('updateMonsterHealth', monsterId, this.monsters[monsterId].health);
+        }
       }
     });
   }
