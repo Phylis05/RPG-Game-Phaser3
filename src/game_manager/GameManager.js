@@ -70,13 +70,14 @@ export default class GameManager {
     this.scene.events.on('monsterAttacked', (monsterId, playerId) => {
       // update the spawner
       if (this.monsters[monsterId]) { 
+        const { gold, attack } = this.monsters[monsterId];
+ 
         // subtract health monster model
         this.monsters[monsterId].loseHealth();
  
         // check the monsters health, and if dead remove that object
         if (this.monsters[monsterId].health <= 0) {
-          const { gold } = this.monsters[monsterId];
- 
+          
           //updating the player's gold
           this.players[playerId].updateGold(gold);
           this.scene.events.emit('updateScore', this.players[playerId].gold);
@@ -85,12 +86,15 @@ export default class GameManager {
           this.spawners[this.monsters[monsterId].spawnerId].removeObject(monsterId);
           this.scene.events.emit('monsterRemoved', monsterId);
         } else {
+          // update the player's health
+          this.players[playerId].updateHealth(-attack);
+          this.scene.events.emit('updatePlayerHealth', playerId, this.players[playerId].health);
           // update the monsters health
           this.scene.events.emit('updateMonsterHealth', monsterId, this.monsters[monsterId].health);
         }
       }
     });
-}
+  }
    
   setupSpawners() {
     const config = {

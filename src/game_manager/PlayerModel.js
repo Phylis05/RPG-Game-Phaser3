@@ -10,8 +10,13 @@ export default class PlayerModel {
     const location = this.spawnLocations[Math.floor(Math.random() * this.spawnLocations.length)];
     [this.x, this.y] = location;
   }
-  
+
   updateGold(gold) {
     this.gold += gold;
+  }
+
+  updateHealth(health) {
+    this.health += health;
+    console.log(this.health);
   }
 }

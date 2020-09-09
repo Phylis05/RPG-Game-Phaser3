@@ -102,48 +102,6 @@ export default class GameScene extends Phaser.Scene {
       this.map = new Map(this, 'map', 'background', 'background', 'blocked');
     }
 
-    createGameManager() {
-        this.events.on('spawnPlayer', (playerObject) => {
-          this.createPlayer(playerObject);
-          this.addCollisions();
-        });
-    
-        this.events.on('chestSpawned', (chest) => {
-          this.spawnChest(chest);
-        });
-    
-        this.events.on('monsterSpawned', (monster) => {
-          this.spawnMonster(monster);
-        });
-    
-        this.events.on('chestRemoved', (chestId) => {
-          this.chests.getChildren().forEach((chest) => {
-            if (chest.id === chestId) {
-              chest.makeInactive();
-            }
-          });
-        });
-    
-        this.events.on('monsterRemoved', (monsterId) => {
-          this.monsters.getChildren().forEach((monster) => {
-            if (monster.id === monsterId) {
-              monster.makeInactive();
-            }
-          });
-        });
-    
-        this.events.on('updateMonsterHealth', (monsterId, health) => {
-          this.monsters.getChildren().forEach((monster) => {
-            if (monster.id === monsterId) {
-              monster.updateHealth(health);
-            }
-          });
-        });
-    
-        this.gameManager = new GameManager(this, this.map.map.objects);
-        this.gameManager.setup();
-    }
-
     spawnMonster(monsterObject) {
         let monster = this.monsters.getFirstDead();  // declare the mosnter variable only here
         if (!monster) {
@@ -169,4 +127,50 @@ export default class GameScene extends Phaser.Scene {
           monster.makeActive();
         }
     }
+
+    createGameManager() {
+      this.events.on('spawnPlayer', (playerObject) => {
+        this.createPlayer(playerObject);
+        this.addCollisions();
+      });
+   
+      this.events.on('chestSpawned', (chest) => {
+        this.spawnChest(chest);
+      });
+   
+      this.events.on('monsterSpawned', (monster) => {
+        this.spawnMonster(monster);
+      });
+   
+      this.events.on('chestRemoved', (chestId) => {
+        this.chests.getChildren().forEach((chest) => {
+          if (chest.id === chestId) {
+            chest.makeInactive();
+          }
+        });
+      });
+   
+      this.events.on('monsterRemoved', (monsterId) => {
+        this.monsters.getChildren().forEach((monster) => {
+          if (monster.id === monsterId) {
+            monster.makeInactive();
+          }
+        });
+      });
+   
+      this.events.on('updateMonsterHealth', (monsterId, health) => {
+        this.monsters.getChildren().forEach((monster) => {
+          if (monster.id === monsterId) {
+            monster.updateHealth(health);
+          }
+        });
+      });
+   
+      this.events.on('updatePlayerHealth', (playerId, health) => {
+        this.player.updateHealth(health);
+      });
+   
+      this.gameManager = new GameManager(this, this.map.map.objects);
+      this.gameManager.setup();
+  }
 }
