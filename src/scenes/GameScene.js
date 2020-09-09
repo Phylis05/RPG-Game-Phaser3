@@ -3,6 +3,7 @@ import Player from '../classes/Player';
 import Chest from '../classes/Chest';
 // import goldSound from '../../assets/audio/Pickup.wav';
 // import Ui from './UiScene';
+import Spawner from '../game_manager/Spawner'
 import Map from '../classes/Map';
 import GameManager from '../game_manager/GameManager'
 // import Monster from '../classes/Monster';
@@ -86,8 +87,16 @@ export default class GameScene extends Phaser.Scene {
       this.events.on('chestSpawned', (chest) => {
         this.spawnChest(chest);
       });
+
+      this.events.on('monsterSpawned', (monster) => {
+        this.spawnMonster(monster);
+      });
      
       this.gameManager = new GameManager(this, this.map.map.objects);
       this.gameManager.setup();
     }
+
+    spawnChest(monster) {
+      console.log(monster);
+  }
 }
