@@ -50,7 +50,11 @@ export default class GameManager {
   }
    
   setupEventListener() {
-   
+    this.scene.events.on('pickUpChest', (chestId) => {
+      if (this.chests[chestId]) {
+        this.spawners[this.chests[chestId].spawnerId].removeObject(chestId);
+      }
+    });
   }
    
   setupSpawners() {
@@ -79,6 +83,7 @@ export default class GameManager {
 
   addChest(chestId, chest) {
     this.chests[chestId] = chest;
+    this.scene.events.emit('chestSpawned', chest);
   }
   
   deleteChest(chestId) {
