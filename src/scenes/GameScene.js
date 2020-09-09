@@ -6,7 +6,7 @@ import Chest from '../classes/Chest';
 import Spawner from '../game_manager/Spawner'
 import Map from '../classes/Map';
 import GameManager from '../game_manager/GameManager'
-// import Monster from '../classes/Monster';
+import Monster from '../classes/Monster';
 export default class GameScene extends Phaser.Scene {
  
     constructor() {
@@ -41,6 +41,8 @@ export default class GameScene extends Phaser.Scene {
  
     createGroups(){
       this.chests = this.physics.add.group();
+
+      this.monsters = this.physics.add.group();
     }
  
     spawnChest(chestObject) {
@@ -96,7 +98,28 @@ export default class GameScene extends Phaser.Scene {
       this.gameManager.setup();
     }
 
-    spawnChest(monster) {
-      console.log(monster);
+    spawnMonster(monsterObject) {
+      let monster = this.monsters.getFirstDead();
+      if (!monster) {
+        monster = new Monster(
+          this,
+          monsterObject.x * 2,
+          monsterObject.y * 2,
+          'monsters',
+          monsterObject.frame,
+          monsterObject.id,
+          monsterObject.health,
+          monsterObject.maxHealth,
+        );
+        // add monster to monsters group
+        this.monsters.add(monster);
+      } else {
+        monster.id = monsterObject.id;
+        monster.health = monsterObject.health;
+        monster.maxHealth = monsterObject.maxHealth;
+        monster.setTexture('monsters', monsterObject.frame);
+        monster.setPosition(monsterObject.x * 2, monsterObject.y * 2);
+        monster.makeActive();
+      }
   }
 }
