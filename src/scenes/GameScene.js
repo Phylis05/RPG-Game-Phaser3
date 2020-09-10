@@ -78,13 +78,12 @@ export default class GameScene extends Phaser.Scene {
     }
  
     addCollisions() {
-      // check for collisions between the player and the tiled blocked layer
       this.physics.add.collider(this.player, this.map.blockedLayer);
-      // check for overlaps between player and chest game objects
+
       this.physics.add.overlap(this.player, this.chests, this.collectChest, null, this);
-      // check for collisions between the monster group and the tiled blocked layer
+      console.log('add collisions method');
       this.physics.add.collider(this.monsters, this.map.blockedLayer);
-      // check for overlaps between the player's weapon and monster game objects
+
       this.physics.add.overlap(this.player.weapon, this.monsters, this.enemyOverlap, null, this);
     }
 
@@ -97,11 +96,9 @@ export default class GameScene extends Phaser.Scene {
  
     collectChest(player, chest) {
       this.goldPickupAudio.play();
-      // this.score += chest.coins;
-      // this.events.emit('updateScore', this.score);
-      // chest.makeInactive();
-      // this.events.emit('pickUpChest', chest.id);
+
       this.events.emit('pickUpChest', chest.id, player.id);
+      console.log('collect chest method')
     }
 
     createMap() {
@@ -113,15 +110,15 @@ export default class GameScene extends Phaser.Scene {
       if (!monster) {
         monster = new Monster(
           this,
-          monsterObject.x,   // remove scaling
-          monsterObject.y,  // remove scaling
+          monsterObject.x,
+          monsterObject.y,
           'monsters',
           monsterObject.frame,
           monsterObject.id,
           monsterObject.health,
           monsterObject.maxHealth,
         );
-        // add monster to monsters group
+
         this.monsters.add(monster);
       } else {
         monster.id = monsterObject.id;
@@ -192,7 +189,10 @@ export default class GameScene extends Phaser.Scene {
    
       this.events.on('respawnPlayer', (playerObject) => {
         this.playerDeathAudio.play();
-        this.player.respawn(playerObject);
+
+        this.scene.switch('GameOver');
+        this.scene.stop('Ui');
+        
       });
    
       this.gameManager = new GameManager(this, this.map.map.objects);

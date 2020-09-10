@@ -1,5 +1,6 @@
 import Phaser from 'phaser';
-import UiButton from '../classes/UiButton';
+import UiButton from '../Objects/UiButton';
+import config from '../Config/config';
 
 export default class TitleScene extends Phaser.Scene {
   constructor() {
@@ -11,10 +12,13 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   create() {
-    this.titleText = this.add.text(this.scale.width / 2, this.scale.height / 2, 'Zenva MMORPG', { fontSize: '64px', fill: '#fff' });
-    this.titleText.setOrigin(0.5);
+    this.titleText = this.add.text(200, 100, 'Zombie Attack', { fontSize: '54px', fill: '#fff' });
 
-    this.startGameButton = new UiButton(this, this.scale.width / 2, this.scale.height * 0.65, 'button1', 'button2', 'Start', this.startScene.bind(this, 'Game')); // NEio
+    this.gameButton = new UiButton(this, config.width / 2, config.height / 2 - 100, 'button1', 'button2', 'Play', this.startScene.bind(this, 'Game'));
+
+    this.creditsButton = new UiButton(this, config.width / 2, config.height / 2, 'button1', 'button2', 'Instructions', this.startScene.bind(this, 'Instruction'));
+
+    this.LeaderButton = new UiButton(this, config.width / 2, config.height / 2 + 100, 'button1', 'button2', 'Scores', this.startScene.bind(this, 'Leader'));
   }
 
   startScene(targetScene) { 

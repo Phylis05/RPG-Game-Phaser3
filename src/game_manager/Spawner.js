@@ -21,10 +21,11 @@ export default class Spawner {
 
   start() {
     this.interval = setInterval(() => {
-      if (this.objectsCreated < this.limit) {
+      if (this.objectsCreated.length < this.limit) {
         this.spawnObject();
       }
     }, this.spawnInterval);
+    if (this.objectType === SpawnerType.MONSTER) this.moveMonsters();
   }
 
   spawnObject() {
@@ -55,7 +56,7 @@ export default class Spawner {
       );
     this.objectsCreated.push(monster);
     this.addObject(monster.id, monster);
-}
+  }
 
   pickRandomLocation() {
     const location = this.spawnLocations[Math.floor(Math.random() * this.spawnLocations.length)];

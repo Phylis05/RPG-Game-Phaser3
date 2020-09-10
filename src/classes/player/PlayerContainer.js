@@ -18,12 +18,10 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     this.flipX = true;
     this.swordHit = false;
    
-    // update the new properties
     this.health = health;
     this.maxHealth = maxHealth;
     this.id = id;
  
-    // set a size on the container
     this.setSize(64, 64);
     // enable physics
     this.scene.physics.world.enable(this);
@@ -46,8 +44,10 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     this.add(this.weapon);
     this.weapon.alpha = 0;
  
-    // create the player healthbar
     this.createHealthBar();
+
+    this.key = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
+
   }
  
   update(cursors) {
@@ -124,9 +124,9 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
       this.health = health;
       this.updateHealthBar();
   }
-  respawn(playerObject) {
-    this.health = playerObject.health;
-    this.setPosition(playerObject.x, playerObject.y);
-    this.updateHealthBar();
-  }
+  // respawn(playerObject) {
+  //   this.health = playerObject.health;
+  //   this.setPosition(playerObject.x, playerObject.y);
+  //   this.updateHealthBar();
+  // }
 }

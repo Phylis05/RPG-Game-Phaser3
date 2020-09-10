@@ -102,11 +102,11 @@ export default class GameManager {
           // check the player's health, if below 0 have the player respawn
           if (this.players[playerId].health <= 0) {
             // update the gold the player has
-            this.players[playerId].updateGold(parseInt(-this.players[playerId].gold / 2), 10);
-            this.scene.events.emit('updateScore', this.players[playerId].gold);
+            // this.players[playerId].updateGold(parseInt(-this.players[playerId].gold / 2), 10);
+            // this.scene.events.emit('updateScore', this.players[playerId].gold);
  
-            // respawn the player
-            this.players[playerId].respawn();
+            // // respawn the player
+            // // this.players[playerId].respawn();
             this.scene.events.emit('respawnPlayer', this.players[playerId]);
           }
         }
