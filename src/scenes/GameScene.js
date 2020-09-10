@@ -2,10 +2,7 @@ import Phaser from 'phaser';
 // import Player from '../classes/player/Player';
 import PlayerContainer from '../classes/player/PlayerContainer';
 import Chest from '../classes/Chest';
-import PlayerModel from '../game_manager/PlayerModel';
-// import goldSound from '../../assets/audio/Pickup.wav';
-// import Ui from './UiScene';
-// import Spawner from '../game_manager/Spawner'
+// import PlayerModel from '../game_manager/PlayerModel';
 import Map from '../classes/Map';
 import GameManager from '../game_manager/GameManager'
 import Monster from '../classes/Monster';

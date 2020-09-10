@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
+import GameOverScene from '../scenes/GameOverScene';
 export default class PlayerModel {
   constructor(spawnLocations) {
     this.health = 10;
@@ -13,6 +14,8 @@ export default class PlayerModel {
 
   updateGold(gold) {
     this.gold += gold;
+    const gameOverInstance = new GameOverScene();
+    gameOverInstance.getGold(this.gold)
   }
 
   updateHealth(health) {

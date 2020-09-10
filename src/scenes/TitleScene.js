@@ -18,7 +18,7 @@ export default class TitleScene extends Phaser.Scene {
 
     this.creditsButton = new UiButton(this, config.width / 2, config.height / 2, 'button1', 'button2', 'Instructions', this.startScene.bind(this, 'Instruction'));
 
-    this.LeaderButton = new UiButton(this, config.width / 2, config.height / 2 + 100, 'button1', 'button2', 'Scores', this.startScene.bind(this, 'Leader'));
+    this.LeaderButton = new UiButton(this, config.width / 2, config.height / 2 + 100, 'button1', 'button2', 'Scores', this.startScene.bind(this, 'LeaderBoard'));
   }
 
   startScene(targetScene) { 
