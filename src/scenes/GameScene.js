@@ -31,9 +31,13 @@ export default class GameScene extends Phaser.Scene {
     update() {
       if (this.player) this.player.update(this.cursors);
     }
- 
+
     createAudio() {
-      this.goldPickupAudio = this.sound.add('goldSound');
+      this.goldPickupAudio = this.sound.add('goldSound', { loop: false, volume: 0.3 });
+      this.playerAttackAudio = this.sound.add('playerAttack', { loop: false, volume: 0.01 });
+      this.playerDamageAudio = this.sound.add('playerDamage', { loop: false, volume: 0.2 });
+      this.playerDeathAudio = this.sound.add('playerDeath', { loop: false, volume: 0.2 });
+      this.monsterDeathAudio = this.sound.add('enemyDeath', { loop: false, volume: 0.2 });
     }
  
     createPlayer(playerObject) {
@@ -53,6 +57,7 @@ export default class GameScene extends Phaser.Scene {
       this.chests = this.physics.add.group();
 
       this.monsters = this.physics.add.group();
+      this.monsters.runChildUpdate = true;
     }
  
     spawnChest(chestObject) {
@@ -104,29 +109,28 @@ export default class GameScene extends Phaser.Scene {
     }
 
     spawnMonster(monsterObject) {
-        let monster = this.monsters.getFirstDead();  // declare the mosnter variable only here
-        if (!monster) {
-          monster = new Monster(                     // the const keyword is removed here
-            this,
-            monsterObject.x * 2,
-            monsterObject.y * 2,
-            'monsters',
-            monsterObject.frame,
-            monsterObject.id,
-            monsterObject.health,
-            monsterObject.maxHealth,
-          );
-          // add monster to monsters group
-          this.monsters.add(monster);
-          monster.setCollideWorldBounds(true);
-        } else {
-          monster.id = monsterObject.id;
-          monster.health = monsterObject.health;
-          monster.maxHealth = monsterObject.maxHealth;
-          monster.setTexture('monsters', monsterObject.frame);
-          monster.setPosition(monsterObject.x * 2, monsterObject.y * 2);
-          monster.makeActive();
-        }
+      let monster = this.monsters.getFirstDead();
+      if (!monster) {
+        monster = new Monster(
+          this,
+          monsterObject.x,   // remove scaling
+          monsterObject.y,  // remove scaling
+          'monsters',
+          monsterObject.frame,
+          monsterObject.id,
+          monsterObject.health,
+          monsterObject.maxHealth,
+        );
+        // add monster to monsters group
+        this.monsters.add(monster);
+      } else {
+        monster.id = monsterObject.id;
+        monster.health = monsterObject.health;
+        monster.maxHealth = monsterObject.maxHealth;
+        monster.setTexture('monsters', monsterObject.frame);
+        monster.setPosition(monsterObject.x, monsterObject.y);  // pass unscaled arguments
+        monster.makeActive();
+      }
     }
 
     createGameManager() {
@@ -155,6 +159,7 @@ export default class GameScene extends Phaser.Scene {
         this.monsters.getChildren().forEach((monster) => {
           if (monster.id === monsterId) {
             monster.makeInactive();
+            this.monsterDeathAudio.play();
           }
         });
       });
@@ -167,11 +172,26 @@ export default class GameScene extends Phaser.Scene {
         });
       });
    
+      // move the monster game object
+      this.events.on('monsterMovement', (monsters) => {
+        this.monsters.getChildren().forEach((monster) => {
+          Object.keys(monsters).forEach((monsterId) => {
+            if (monster.id === monsterId) {
+              this.physics.moveToObject(monster, monsters[monsterId], 40);
+            }
+          });
+        });
+      });
+   
       this.events.on('updatePlayerHealth', (playerId, health) => {
+        if (health < this.player.health) {
+          this.playerDamageAudio.play();
+        }
         this.player.updateHealth(health);
       });
-
+   
       this.events.on('respawnPlayer', (playerObject) => {
+        this.playerDeathAudio.play();
         this.player.respawn(playerObject);
       });
    

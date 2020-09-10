@@ -51,6 +51,9 @@ export default class GameManager {
     });
   }
   
+  moveMonsters() {
+      this.scene.events.emit('monsterMovement', this.monsters);
+  }
   setupEventListener() {
     this.scene.events.on('pickUpChest', (chestId, playerId) => {
       // update the spawner
@@ -118,7 +121,6 @@ export default class GameManager {
       spawnerType: SpawnerType.CHEST,
       id: '',
     };
-    
     let spawner;
  
     // create chest spawners
@@ -144,10 +146,11 @@ export default class GameManager {
         this.monsterLocations[key],
         this.addMonster.bind(this),
         this.deleteMonster.bind(this),
+        this.moveMonsters.bind(this),
       );
       this.spawners[spawner.id] = spawner;
     });
-  }
+}
    
   spawnPlayer() {
     const player = new PlayerModel(this.playerLocations);

@@ -1,9 +1,10 @@
+import Phaser from 'phaser'
 import ChestModel from './ChestModel';
 import MonsterModel from './MonsterModel';
 import { SpawnerType, randomNumber } from './utils';
 
 export default class Spawner {
-  constructor(config, spawnLocations, addObject, deleteObject) {
+  constructor(config, spawnLocations, addObject, deleteObject, moveObjects) {
     this.id = config.id;
     this.spawnInterval = config.spawnInterval;
     this.limit = config.limit;
@@ -11,11 +12,12 @@ export default class Spawner {
     this.spawnLocations = spawnLocations;
     this.addObject = addObject;
     this.deleteObject = deleteObject;
+    this.moveObjects = moveObjects;  // reference to moveObjects
  
     this.objectsCreated = [];
  
     this.start();
-    }
+  }
 
   start() {
     this.interval = setInterval(() => {
@@ -71,6 +73,16 @@ export default class Spawner {
   removeObject(id) {
     this.objectsCreated = this.objectsCreated.filter(obj => obj.id !== id);
     this.deleteObject(id);
+  }
+
+  moveMonsters() {
+    this.moveMonsterInterval = setInterval(() => {
+      this.objectsCreated.forEach((monster) => {
+        monster.move();
+      });
+ 
+      this.moveObjects();
+    }, 1000);
   }
 
   
