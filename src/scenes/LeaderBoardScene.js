@@ -11,7 +11,7 @@ export default class LeaderBoardScene extends Phaser.Scene {
   create() {
     this.add.text(250, 100, 'Leader Board 🏆', { fontSize: '54px', fill: '#fff' });
 
-    this.retrieveScore();
+    this.retrieveResult();
 
     this.menuButton = new Button(this, config.width / 2, config.height / 2 + 250, 'button1', 'button2', 'Menu', this.startScene.bind(this, 'Title'));
     this.playButton = new Button(this, config.width / 2, config.height / 2 + 150, 'button1', 'button2', 'Play', this.startScene.bind(this, 'Game'));
@@ -22,17 +22,17 @@ export default class LeaderBoardScene extends Phaser.Scene {
     this.scene.start(targetScene);
   }
 
-  async retrieveScore() {
-    const response = await setScores.getScores();
+  async retrieveResult() {
+    const response = await setScores.getResults();
     const scores = response.sort((x, y) => y.score - x.score);
     if (scores.empty) {
       //
     } else {
-      this.displayScores(scores);
+      this.displayResult(scores);
     }
   }
 
-  displayScores(info) {
+  displayResult(info) {
     let spaceY = 0;
 
     for (let i = 0; i <= 5; i += 1) {
