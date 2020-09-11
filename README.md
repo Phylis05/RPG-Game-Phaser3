@@ -24,7 +24,7 @@ This is an RPG game built with the Phaser game library
 - The player must be quick to fight the monsters so that he doesn't lose his health.
 - The game is over if the player's health is at zero.
 - When the game is over it takes you to screen where you can add your scores to the leader board, click on the submit button to add your name to the leader board.
-- [Play online here]()
+- [Play online here](https://nostalgic-austin-fda8b7.netlify.app/);
 
 ## Built with:
 - JavaScript
@@ -41,33 +41,33 @@ This is an RPG game built with the Phaser game library
 
 - Clone the repository by running this command in your terminal 
 
-`git clone https://github.com/Phylis05/RPG-Game-Phaser3.git`
+  `git clone https://github.com/Phylis05/RPG-Game-Phaser3.git`
 - Navigate into the newly created folder
 
-`cd RPG-GamePhaser3`
+  `cd RPG-GamePhaser3`
 
 - Install all of the dependencies
 
-`npm install`
+  `npm install`
 
 - Bundle the files and start the development server
 
-`npm run start`
+  `npm run start`
 
 - Visit this link to see the game in your browser
 
-`http://localhost:8080/`
+  `http://localhost:8080/`
 
 - To run Jest tests
 
-`npm test`
+  `npm test`
 
 ## Author
 
 👤 **Phylis Chepchumba**
 
 - Github: [Phylis05](https://github.com/phylis05)
-- Linkedin: [PhylisChepchumba](https://linkedin.com/phylis-chepchumba)
+- Linkedin: [Phylis Chepchumba](https://linkedin.com/phylis-chepchumba)
 - Twitter: [phylis_chumbaa](https://twitter.com/phylis_chumbaa)
 
 ## 🤝 Contributing

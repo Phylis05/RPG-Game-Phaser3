@@ -25,31 +25,3 @@ class Game extends Phaser.Game {
 }
 
 window.game = new Game();
-
-// export const gameConfig = {
-//   type: Phaser.AUTO,
-//   width: 800,
-//   height: 600,
-//   scene: [
-//     BootScene,
-//     PreloaderScene,
-//     InstructionScene,
-//     TitleScene,
-//     GameScene,
-//     UiScene,
-//     GameOverScene,
-//  ],
-//   physics: {
-//       default: 'arcade',
-//       arcade: {
-//         debug: true,
-//         gravity: {
-//           y:0,
-//         },
-//       },
-//     },
-//     pixelArt: true,
-//     roundPixels: true, 
-// };
-
-// let game = new Phaser.Game(gameConfig)

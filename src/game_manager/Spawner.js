@@ -11,7 +11,7 @@ export default class Spawner {
     this.spawnLocations = spawnLocations;
     this.addObject = addObject;
     this.deleteObject = deleteObject;
-    this.moveObjects = moveObjects;  // reference to moveObjects
+    this.moveObjects = moveObjects;
  
     this.objectsCreated = [];
  

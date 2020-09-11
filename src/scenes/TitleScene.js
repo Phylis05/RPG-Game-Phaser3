@@ -7,10 +7,6 @@ export default class TitleScene extends Phaser.Scene {
       super('Title');
   }
 
-  preload() {
-
-  }
-
   create() {
     this.titleText = this.add.text(200, 100, 'Zombie Attack', { fontSize: '54px', fill: '#fff' });
 
