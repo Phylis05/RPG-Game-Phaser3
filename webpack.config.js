@@ -26,14 +26,14 @@ module.exports = {
       },
       {
         test: /\.(ogg|mp3|wav|mpe?g)$/i,
-        use: 'file-loader'
-      }
+        use: 'file-loader',
+      },
     ],
   },
   devServer: {
     contentBase: path.resolve(__dirname, 'build'),
   },
-  
+
   plugins: [
     new webpack.DefinePlugin({
       CANVAS_RENDERER: JSON.stringify(true),

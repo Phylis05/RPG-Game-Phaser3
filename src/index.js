@@ -4,10 +4,10 @@ import BootScene from './scenes/BootScene';
 import TitleScene from './scenes/TitleScene';
 import UiScene from './scenes/UiScene';
 import GameOverScene from './scenes/GameOverScene';
-import PreloaderScene  from './scenes/PreloaderScene';
+import PreloaderScene from './scenes/PreloaderScene';
 import LeaderBoardScene from './scenes/LeaderBoardScene';
 import InstructionScene from './scenes/InstructionScene';
-import config from './Config/config'
+import config from './Config/config';
 
 class Game extends Phaser.Game {
   constructor() {

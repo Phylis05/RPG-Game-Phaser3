@@ -13,7 +13,7 @@ export default class MonsterModel {
     this.maxHealth = health;
     this.attack = attack;
   }
-  
+
   loseHealth() {
     this.health -= 1;
   }
@@ -21,7 +21,7 @@ export default class MonsterModel {
   move() {
     const randomPosition = randomNumber(1, 8);
     const distance = 64;
- 
+
     switch (randomPosition) {
       case 1:
         this.x += distance;
@@ -54,5 +54,5 @@ export default class MonsterModel {
       default:
         break;
     }
-}
+  }
 }

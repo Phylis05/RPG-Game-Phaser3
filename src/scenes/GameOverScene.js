@@ -1,10 +1,11 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/no-cycle */
 import Phaser from 'phaser';
 import Button from '../Objects/UiButton';
 import setScores from '../Objects/api';
 import config from '../Config/config';
 import PlayerModel from '../game_manager/PlayerModel';
-
-/* eslint-disable no-undef */
 
 let result = 0;
 
@@ -15,15 +16,14 @@ export default class GameOverScene extends Phaser.Scene {
 
   getGold(value) {
     result = value;
-    console.log(result);
   }
 
   create() {
     this.add.text(450, 200, `Total Score: ${result}`, { fontSize: 36 }).setOrigin(0.5);
-    
+
     const mainDiv = document.getElementById('phaser-game');
     const userData = document.createElement('div');
-    userData.setAttribute('id', 'user-input')
+    userData.setAttribute('id', 'user-input');
     const input = document.createElement('input');
     input.setAttribute('id', 'player-name');
     input.setAttribute('placeholder', 'Enter Your Name');
@@ -43,12 +43,11 @@ export default class GameOverScene extends Phaser.Scene {
       const name = document.getElementById('player-name').value;
       document.getElementById('player-name').remove();
       document.querySelector('.submit-button').remove();
-      setScores.saveScore(name, result);
+      setScores.saveResults(name, result);
     });
-
-
   }
-  startScene(targetScene) { 
+
+  startScene(targetScene) {
     this.scene.start(targetScene);
   }
 }

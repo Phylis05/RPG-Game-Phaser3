@@ -1,10 +1,11 @@
+/* eslint-disable import/no-cycle */
 import Phaser from 'phaser';
 import UiButton from '../Objects/UiButton';
 import config from '../Config/config';
 
 export default class TitleScene extends Phaser.Scene {
   constructor() {
-      super('Title');
+    super('Title');
   }
 
   create() {
@@ -17,7 +18,7 @@ export default class TitleScene extends Phaser.Scene {
     this.LeaderButton = new UiButton(this, config.width / 2, config.height / 2 + 100, 'button1', 'button2', 'Scores', this.startScene.bind(this, 'LeaderBoard'));
   }
 
-  startScene(targetScene) { 
+  startScene(targetScene) {
     this.scene.start(targetScene);
   }
 }

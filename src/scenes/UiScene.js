@@ -1,6 +1,9 @@
-import Game from './GameScene'
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/no-cycle */
+import Phaser from 'phaser';
+import Game from './GameScene';
+
 export default class UiScene extends Phaser.Scene {
- 
   constructor() {
     super('Ui');
   }
@@ -15,7 +18,7 @@ export default class UiScene extends Phaser.Scene {
   }
 
   setupUiElements() {
-    this.scoreText = this.add.text(35, 8, 'Coins: 0', {fontSize: '16px', fill: '#fff'}); // NEW
+    this.scoreText = this.add.text(35, 8, 'Coins: 0', { fontSize: '16px', fill: '#fff' });
     this.coinIcon = this.add.image(15, 15, 'items', 3);
   }
 

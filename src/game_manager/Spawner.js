@@ -12,9 +12,9 @@ export default class Spawner {
     this.addObject = addObject;
     this.deleteObject = deleteObject;
     this.moveObjects = moveObjects;
- 
+
     this.objectsCreated = [];
- 
+
     this.start();
   }
 
@@ -34,7 +34,7 @@ export default class Spawner {
       this.spawnMonster();
     }
   }
-   
+
   spawnChest() {
     const location = this.pickRandomLocation();
     const chest = new ChestModel(location[0], location[1], randomNumber(10, 20), this.id);
@@ -52,7 +52,7 @@ export default class Spawner {
       randomNumber(0, 20),
       randomNumber(3, 5),
       1,
-      );
+    );
     this.objectsCreated.push(monster);
     this.addObject(monster.id, monster);
   }
@@ -65,11 +65,11 @@ export default class Spawner {
       }
       return false;
     });
- 
+
     if (invalidLocation) return this.pickRandomLocation();
     return location;
   }
-   
+
   removeObject(id) {
     this.objectsCreated = this.objectsCreated.filter(obj => obj.id !== id);
     this.deleteObject(id);
@@ -80,10 +80,8 @@ export default class Spawner {
       this.objectsCreated.forEach((monster) => {
         monster.move();
       });
- 
+
       this.moveObjects();
     }, 1000);
   }
-
-  
 }

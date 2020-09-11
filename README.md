@@ -2,7 +2,7 @@
 This is an RPG game built with the Phaser game library
 
 ## Live Demo
-![Zombie Attack Game]()
+![Zombie Attack Game](assets/images/app.png);
 
 ## About
 - The main objective of this project was to build a platform game. I got inspiration from Zenva Academy Tutorial to implement the game design, different scenes and scoring system.

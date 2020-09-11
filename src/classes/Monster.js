@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 
 export default class Monster extends Phaser.Physics.Arcade.Image {
   constructor(scene, x, y, key, frame, id, health, maxHealth) {
@@ -6,7 +7,7 @@ export default class Monster extends Phaser.Physics.Arcade.Image {
     this.id = id;
     this.health = health;
     this.maxHealth = maxHealth;
- 
+
     this.scene.physics.world.enable(this);
 
     this.setImmovable(false);
@@ -16,9 +17,9 @@ export default class Monster extends Phaser.Physics.Arcade.Image {
     this.setCollideWorldBounds(true);
 
     this.scene.add.existing(this);
-    
+
     this.setOrigin(0);
- 
+
     this.createHealthBar();
   }
 
@@ -26,19 +27,19 @@ export default class Monster extends Phaser.Physics.Arcade.Image {
     this.healthBar = this.scene.add.graphics();
     this.updateHealthBar();
   }
- 
+
   updateHealthBar() {
     this.healthBar.clear();
     this.healthBar.fillStyle(0xffffff, 1);
     this.healthBar.fillRect(this.x, this.y - 8, 64, 5);
     this.healthBar.fillGradientStyle(0xff0000, 0xffffff, 4);
     this.healthBar.fillRect(this.x, this.y - 8, 64 * (this.health / this.maxHealth), 5);
-  }  
+  }
 
   update() {
     this.updateHealthBar();
   }
- 
+
   updateHealth(health) {
     this.health = health;
     this.updateHealthBar();
@@ -49,7 +50,7 @@ export default class Monster extends Phaser.Physics.Arcade.Image {
     this.setVisible(true);
     this.body.checkCollision.none = false;
   }
-  
+
   makeInactive() {
     this.setActive(false);
     this.setVisible(false);

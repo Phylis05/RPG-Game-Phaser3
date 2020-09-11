@@ -1,6 +1,5 @@
-import 'phaser';
+import Phaser from 'phaser';
 import Button from '../Objects/UiButton';
-import Button2 from '../../assets/images/ui/blue_button02.png';
 
 
 export default class InstructionScene extends Phaser.Scene {
@@ -9,7 +8,6 @@ export default class InstructionScene extends Phaser.Scene {
   }
 
   create() {
-  
     this.text = this.add.text(200, 40, 'How to play😎', { fontSize: 40 });
 
     this.leftText = this.add.text(200, 100, 'Move the player to the left ⬅️', { fontSize: 24 });
@@ -20,9 +18,10 @@ export default class InstructionScene extends Phaser.Scene {
 
     this.downText = this.add.text(200, 280, 'Move the player down ⬇️', { fontSize: 24 });
 
-    this.menuButton = new Button(this, 400, 400, 'button1', 'button2', 'Play', this.startScene.bind(this, 'Game'));
-
+    this.playButton = new Button(this, 400, 400, 'button1', 'button2', 'Play', this.startScene.bind(this, 'Game'));
+    this.menuButton = new Button(this, 400, 500, 'button1', 'button2', 'Menu', this.startScene.bind(this, 'Title'));
   }
+
   startScene(targetScene) {
     this.scene.start(targetScene);
   }

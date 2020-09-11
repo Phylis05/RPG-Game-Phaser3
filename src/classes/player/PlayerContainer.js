@@ -17,11 +17,11 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     this.playerAttacking = false;
     this.flipX = true;
     this.swordHit = false;
-   
+
     this.health = health;
     this.maxHealth = maxHealth;
     this.id = id;
- 
+
     this.setSize(64, 64);
 
     this.scene.physics.world.enable(this);
@@ -31,23 +31,22 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     this.scene.add.existing(this);
 
     this.scene.cameras.main.startFollow(this);
- 
+
     this.player = new Player(this.scene, 0, 0, key, frame);
     this.add(this.player);
- 
+
     this.weapon = this.scene.add.image(40, 0, 'items', 4);
     this.scene.add.existing(this.weapon);
     this.weapon.setScale(1.5);
     this.scene.physics.world.enable(this.weapon);
     this.add(this.weapon);
     this.weapon.alpha = 0;
- 
+
     this.createHealthBar();
 
     this.key = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.CTRL);
-
   }
- 
+
   update(cursors) {
     this.body.setVelocity(0);
 
@@ -104,11 +103,12 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     }
     this.updateHealthBar();
   }
+
   createHealthBar() {
     this.healthBar = this.scene.add.graphics();
     this.updateHealthBar();
   }
-  
+
   updateHealthBar() {
     this.healthBar.clear();
     this.healthBar.fillStyle(0xffffff, 1);
@@ -116,9 +116,9 @@ export default class PlayerContainer extends Phaser.GameObjects.Container {
     this.healthBar.fillGradientStyle(0xff0000, 0xffffff, 4);
     this.healthBar.fillRect(this.x - 32, this.y - 40, 64 * (this.health / this.maxHealth), 5);
   }
-  
+
   updateHealth(health) {
-      this.health = health;
-      this.updateHealthBar();
+    this.health = health;
+    this.updateHealthBar();
   }
 }
