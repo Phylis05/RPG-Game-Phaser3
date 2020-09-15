@@ -2,6 +2,7 @@
 import Phaser from 'phaser';
 import UiButton from '../Objects/UiButton';
 import config from '../Config/config';
+import GameScene from './GameScene';
 
 export default class TitleScene extends Phaser.Scene {
   constructor() {
@@ -9,6 +10,9 @@ export default class TitleScene extends Phaser.Scene {
   }
 
   create() {
+    this.scene.remove('Game');
+    this.scene.add('Game', new GameScene());
+
     this.titleText = this.add.text(200, 100, 'Zombie Attack', { fontSize: '54px', fill: '#fff' });
 
     this.gameButton = new UiButton(this, config.width / 2, config.height / 2 - 100, 'button1', 'button2', 'Play', this.startScene.bind(this, 'Game'));

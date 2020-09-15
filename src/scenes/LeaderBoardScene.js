@@ -3,6 +3,7 @@ import Phaser from 'phaser';
 import setScores from '../Objects/api';
 import Button from '../Objects/UiButton';
 import config from '../Config/config';
+import GameScene from './GameScene';
 
 export default class LeaderBoardScene extends Phaser.Scene {
   constructor() {
@@ -13,6 +14,9 @@ export default class LeaderBoardScene extends Phaser.Scene {
     this.add.text(250, 100, 'Leader Board 🏆', { fontSize: '54px', fill: '#fff' });
 
     this.retrieveResult();
+
+    this.scene.remove('Game');
+    this.scene.add('Game', new GameScene());
 
     this.menuButton = new Button(this, config.width / 2, config.height / 2 + 250, 'button1', 'button2', 'Menu', this.startScene.bind(this, 'Title'));
     this.playButton = new Button(this, config.width / 2, config.height / 2 + 150, 'button1', 'button2', 'Play', this.startScene.bind(this, 'Game'));

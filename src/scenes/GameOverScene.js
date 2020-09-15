@@ -28,6 +28,7 @@ export default class GameOverScene extends Phaser.Scene {
     input.setAttribute('id', 'player-name');
     input.setAttribute('placeholder', 'Enter Your Name');
     input.type = 'text';
+    input.setAttribute('required', '');
     userData.appendChild(input);
 
     const submitBtn = document.createElement('button');
